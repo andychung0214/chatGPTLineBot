@@ -7,25 +7,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Web;
+using Microsoft.Extensions.Configuration;
 
 namespace isRock.Template
 {
     public class ChatGPT
     {
+        public readonly IConfiguration Configuration;
+
+        public ChatGPT(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public static Result CallChatGPT(string msg)
         {
+            // var BearerToken = Configuration["chatGPT:Token"];
+            
             HttpClient client = new HttpClient();
             string uri = "https://api.openai.com/v1/completions";
-
             // Request headers.
             client.DefaultRequestHeaders.Add(
-                "Authorization", "Bearer ________chatGPT_Token_______________");
+                "Authorization", "Bearer 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");
 
             var JsonString = @"
             {
   ""model"": ""text-davinci-003"",
   ""prompt"": ""question"",
-  ""max_tokens"": 4000,
+  ""max_tokens"": 4008,
   ""temperature"": 0
 }
             ".Replace("question", msg);

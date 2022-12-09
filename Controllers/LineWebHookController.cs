@@ -4,22 +4,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace isRock.Template
 {
     public class LineWebHookController : isRock.LineBot.LineWebHookControllerBase
     {
+        // requires using Microsoft.Extensions.Configuration;
+        private readonly IConfiguration Configuration;
+
+        public LineWebHookController(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         [Route("api/LineBotWebHook")]
         [HttpPost]
         public IActionResult POST()
         {
-            var AdminUserId = "__________Line_Admin_User_ID________________";
+            var AdminUserId = Configuration["LineWebHook:AdminUserId"];
 
             try
             {
                 //設定ChannelAccessToken
-                this.ChannelAccessToken = "______________Line_Channel_Access_Token______________";
-                //配合Line Verify
+                this.ChannelAccessToken = Configuration["LineWebHook:AccessToken"];
+                
                 if (ReceivedMessage.events == null || ReceivedMessage.events.Count() <= 0 ||
                     ReceivedMessage.events.FirstOrDefault().replyToken == "00000000000000000000000000000000") return Ok();
                 //取得Line Event
