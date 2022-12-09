@@ -22,12 +22,12 @@ namespace isRock.Template
         [HttpPost]
         public IActionResult POST()
         {
-            var AdminUserId = Configuration["LineWebHook:AdminUserId"];
+            var AdminUserId = Configuration["LineWebHook:AdminUserId"] ;
 
             try
             {
                 //設定ChannelAccessToken
-                this.ChannelAccessToken = Configuration["LineWebHook:AccessToken"];
+                this.ChannelAccessToken = Configuration["LineWebHook:AccessToken"] ;
                 
                 if (ReceivedMessage.events == null || ReceivedMessage.events.Count() <= 0 ||
                     ReceivedMessage.events.FirstOrDefault().replyToken == "00000000000000000000000000000000") return Ok();

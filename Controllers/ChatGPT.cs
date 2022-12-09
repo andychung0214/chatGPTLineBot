@@ -17,7 +17,7 @@ namespace isRock.Template
 
         public ChatGPT(IConfiguration configuration)
         {
-            Configuration = configuration;
+            Configuration = configuration ;
         }
 
         public static Result CallChatGPT(string msg)
